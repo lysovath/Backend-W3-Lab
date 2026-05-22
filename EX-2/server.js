@@ -11,6 +11,10 @@ app.get('/departments/:dept/courses', (req, res) => {
     // Implementing the filter logic
     // Hint: Use the filter method to filter the courses array based on the provided criteria
     const coursesFiltered = courses.filter(course => {
+        if(Number(minCredits) > Number(maxCredits)) {
+            res.status(400);
+            return res.send(`minCredit can't be more than maxCredit`)
+        }
         if(course.department.toLowerCase() !== dept) return false;
         if(level && course.level.toLowerCase() !== level) return false;
         if(minCredits && course.credits < Number(minCredits)) return false;
